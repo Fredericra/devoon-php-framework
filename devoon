@@ -1,0 +1,128 @@
+<?php
+
+use Provider\LoadingClass\Save;
+use ProviderMain\Console\Console;
+use ProviderMain\SecuriteFile\Securite;
+use Random\Engine\Secure;
+use ProviderMain\Apirest\Route\RouteAs;
+use ProviderMain\Console\Cmd;
+use ProviderMain\Console\Database;
+use ProviderMain\Os\WritterMod;
+
+require "ProviderMain/LoadingClass/Save.php";
+
+Save::AutoSaving();
+$commande = [
+    "db" => ["refresh", "update", "up", "default"],
+    "table" => ["refresh", "up","update"],
+    "model" => ["create","refresh", "delete", "--table:flagTable", "--permission:flagBoolean"],
+    "controller" => ["create", "delete", "--gen:flagController"],
+    "view" => ["create", "delete"],
+    "middleware" => ["create", "delete", "--name:flagName"],
+    "route" => ["list", "delete"],
+    "server" => ["host", "port"],
+    "validate"=>["create","--name:flagnName"],
+    "run"=>["npm"],
+    "test"=>["start"]
+];
+
+
+$namespace = Securite::namespace();
+$code = isset($argv) && count($argv) > 1 ? $argv[1] : null;
+$method = isset($argv) && count($argv) > 2 ? $argv[2] : null;
+$flag = isset($argv) && count($argv) > 3 ? $argv[3] : null;
+$key = array_keys($commande);
+$find =isset($code) && !empty($code)?preg_match("/^(\w+)(:)(\w+)$/", $code, $match):null;
+$findKey = isset($match[1]) ? $match[1] : "";
+if (!empty($code) && preg_match("/^(?i)(serve:)(\d+)$/", $code, $match)) {
+    $local = $match[2];
+    $dir = getcwd();
+    $serv = "php -S 127.0.0.1:$local -t $dir";
+    shell_exec($serv);
+}
+if (!empty($code) && preg_match("/^serve$/", $code)) {
+    $dir = getcwd();
+    $serv = "php -S 127.0.0.1:5000 -t $dir";
+    shell_exec($serv);
+}
+
+if (!empty($code)) {
+    if (in_array($findKey, $key)) {
+       if (preg_match("/(model|controller|view|middleware|validate)(:)(delete|create)/", $code,$match) && !empty($method)) {
+            $type = $match[3];
+            $flagData = isset($flag) && !empty($flag) ? explode("--", trim($flag)) : [];
+            $array = [];
+            foreach ($flagData as $item) {
+                if (preg_match("/^(table:)(\w+)$/", $item, $match) && !empty($method)) {
+                    $table = $match[2];
+                    $array[] = ["table" => $table];
+                } elseif (preg_match("/^(permission:)(\w+)$/", $item, $match)) {
+                    $array[] = ["permiss" => $match[2]];
+                } elseif (preg_match("/^(name:)(\w+)$/", $item, $match)) {
+                    $array[] = ["middle" => $match[2]];
+                } elseif (preg_match("/^(gen|generate)$/", $item, $match)) {
+                    $array[] = ["generate" => true];
+                }
+                elseif(preg_match("/^(validate:|name:)(\w+)$/",$item,$match))
+                {
+                    $array[] = ["validate"=>$match[2]];
+                }
+                elseif (preg_match("/^(rule:|rules)(\w+)$/", $item, $match)) {
+                    $array[] = ["rule" => $match[2]];
+                }
+            }
+
+            $array = call_user_func_array("array_merge", $array);
+            Cmd::Console($method, $findKey, $array,$type);
+        } elseif (preg_match("/(?i)(db:)(refresh)/", $code)) {
+
+            Database::CreateTable();
+        } elseif (preg_match("/(?i)(db:)(up|update)/", $code)) {
+            Database::Up();
+        } elseif (preg_match("/(?i)(db:)(default)/", $code)) {
+            Database::Deleting();
+        }
+        elseif(preg_match("/(?i)(table:)(refresh)/",$code) && !empty($method))
+        {
+            Database::Table($code,$method,$flag);
+        }
+        elseif(preg_match("/(?i)(table:)(up)/",$code) && !empty($method))
+        {
+            Database::TableUp($code,$method,$flag);
+        }
+        elseif (preg_match("/($findKey:)(list)/", $code)) {
+            echo "|  Name  |  method  |    call     |     uri   |    middleware " . PHP_EOL;
+            foreach (RouteAs::GetMiddle() as $key => $value) {
+                list($list1, $list2) = $value['middleware'];
+                $middleware = !empty($list2) ? "2: " . $list1 . " && " . $list2 : "1: " . $list1;
+                echo "|" . $value["route"] . "|" . $value[0]['method'] . "|" . $value[0]['call'] . "|" . $value[0]['uri'] . "| $middleware" . PHP_EOL;
+                echo " ----------------------------------------------------------------------------------------" . PHP_EOL;
+            }
+        } 
+        elseif(preg_match("/(test:)(start)/",$code))
+        {
+            WritterMod::Rewrite();
+        }
+        elseif(preg_match("/(run:npm)/",$code) && !empty($method))
+        {
+            $flagData = isset($flag) && !empty($flag) ? explode("--", trim($flag)) : [];
+            foreach ($flagData as $key => $value) {
+                if(!empty($value))
+                {
+                    $run[] = $value;
+                }
+            }
+            Cmd::Run($method,$run);
+        }
+        else {
+            echo "enter code $findKey:create <ModuleName>" . PHP_EOL;
+        }
+    }
+} else {
+    foreach ($commande as $key => $value) {
+        echo "$key:" . PHP_EOL;
+        foreach ($value as $item) {
+            echo "-$key:$item" . PHP_EOL;
+        }
+    }
+}

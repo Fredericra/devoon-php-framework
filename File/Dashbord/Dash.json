@@ -1,0 +1,28 @@
+[
+    {
+        "title": "Documentation",
+        "value": "this application framework use of workin in php langage. Need more MVC module MVC module and APIREST FULL",
+        "command":{
+        },
+        "documentation":true
+          
+        
+    },
+    {
+        "title": "RESTAPI FULL",
+        "value": "this application framework use of workin in php langage. Need more MVC module MVC module and APIREST FULL",
+        "command":{}
+    },
+    {
+        "title": "MVC MODE",
+        "value": "this application framework use of workin in php langage. Need more MVC module MVC module and APIREST FULL",
+        "command":{
+            
+        }
+    },
+    {
+        "title": "ELOQUENT MODULE",
+        "value": "this application framework use of workin in php langage. Need more MVC module MVC module and APIREST FULL",
+        "command":{}
+    }
+]

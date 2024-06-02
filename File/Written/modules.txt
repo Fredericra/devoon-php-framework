@@ -1,0 +1,29 @@
+<?php
+
+namespace webApp\Model&&;
+
+use ProviderMain\Database\Module\ConfigModule;
+use ProviderMain\Database\Module\Module;
+
+class ?? extends Module
+{
+
+    public static function Create(array $array, $type = true)
+    {
+        //create new
+    }
+    public static function Relation(string $table, string $relation)
+    {
+        //relation table
+    }
+    public static function Delete(array|int $array)
+    {
+        //deleteing 
+    }
+    public static function ModuleRelation()
+    {
+        //$this->MuchAs(Module::class,"idUser");
+    }
+   
+    
+}

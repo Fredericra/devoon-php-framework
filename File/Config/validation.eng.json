@@ -1,0 +1,22 @@
+[
+    {
+        "require":"the :property is empty",
+        "integer":"the :property is not integer",
+        "string":"the :property is not string",
+        "max:number":"the :property count caracter is less :number",
+        "min:number":"the :property count caracter is more :number",
+        "only:table":"the :property is exist on :table",
+        "mixed:other":"the :property is mixed integer and string",
+        "mixed":"the :property is mixed integer and string",
+        "same:other":"the :property is diffrent of :other",
+        "email":"the :property is not mail",
+        "date":"the :property is not date",
+        "json":"the :property is not date",
+        "exists:table":"the :property is not exist on :table",
+        "verifyhass:table":"the :property is  not verify :table",
+        "file":"the :property is not file",
+        "file:max":"the :property is less :max",
+        "file:min":"the :property is more :max  ",
+        "file:type":"the: property is not :type"
+    }
+]

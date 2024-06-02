@@ -1,0 +1,12 @@
+<IfModule mod_ssl.c>
+	<VirtualHost _default_:80>
+		ServerAdmin webmaster@localhost
+		DocumentRoot /var/www/html
+		<FilesMatch "\.(cgi|shtml|phtml|php)$">
+				SSLOptions +StdEnvVars
+		</FilesMatch>
+		<Directory ??>
+				AllowOverride All
+		</Directory>
+	</VirtualHost>
+</IfModule>

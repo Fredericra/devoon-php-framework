@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+@layer base{
+    
+}
+@layer components{
+   
+    .link{
+        @apply font-mono  hover:text-indigo-400 text-indigo-900 hover:translate-y-1  duration-1000;
+    }
+    .media{
+        @apply grid sm:grid-cols-1 md:grid-cols-12;
+    }
+    .card{
+        @apply shadow-lg duration-700 hover:shadow-2xl;
+    }
+    .input{
+        @apply h-9 bg-gray-200 outline-none rounded-md w-full text-gray-500 indent-6 font-bold hover:bg-gray-300 duration-1000 shadow-lg ;
+    }
+    .label{
+        @apply absolute -top-4 left-4 py-1 font-bold text-indigo-400;
+    }
+    .errors{
+        @apply overflow-y-scroll h-full;
+    }
+    .error{
+        @apply w-screen bg-gray-400 overflow-y-scroll top-0;
+    }
+    .error-head{
+        @apply mx-4 my-4 bg-indigo-500 shadow-lg shadow-indigo-300 py-5 px-5 font-bold text-center text-white;
+    }
+    .error-body{
+        @apply mx-4 my-4 bg-violet-500  px-4 py-4 font-bold h-full text-white;
+    }
+    .error-footer{
+        @apply py-4 px-4 text-white bg-gray-700 font-mono text-right fixed bottom-0 w-full;
+    }
+    .button{
+        @apply px-2 py-1 bg-gray-400 hover:bg-gray-700 text-white font-bold duration-700;
+    }
+}
+@layer utilities{
+
+}

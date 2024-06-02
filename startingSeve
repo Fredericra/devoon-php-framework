@@ -1,0 +1,3 @@
+
+lien wap\xammp\bin\ httpd.exe -k restart// window mod_rewrite http_build_query
+sudo a2emod rewrite // lunix mod_rewrite http_build_query

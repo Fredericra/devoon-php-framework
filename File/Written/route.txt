@@ -1,0 +1,22 @@
+
+
+use ProviderMain\Apirest\Request\Request;
+use webApp\Controller\IndexController;
+use ProviderMain\Apirest\Route\RouteAs;
+use ProviderMain\Error\ErrorValue;
+use webApp\Controller\User\UserController;
+
+
+
+
+RouteAs::GroupMiddle("user",function(){
+    RouteAs::POST("/connexion",[UserController::class,"connexion"])->name("post.connexion");
+    RouteAs::GET("/connexion",[UserController::class,"connexion"])->name("connexion");
+    RouteAs::GET("/",[IndexController::class,'index'])->name('home')->mode('auth');
+    RouteAs::GET("/inscrire",[UserController::class,"inscrire"])->name("get.inscrire")->mode('valide');
+    RouteAs::POST("/inscrire","webApp\Controller\User\UserController@inscrire")->name("post.inscrire");
+    
+});
+
+
+RouteAs::Run();

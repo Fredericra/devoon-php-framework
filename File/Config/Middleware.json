@@ -1,0 +1,17 @@
+[
+    {
+        "client": {
+            "class": "File\\Middleware\\Client\\Client"
+        }
+    },
+    {
+        "admin": {
+            "class": "File\\Middleware\\Admin\\Admin"
+        }
+    },
+    {
+        "authenticate": {
+            "class": "File\\Middleware\\Auth\\Auth"
+        }
+    }
+]

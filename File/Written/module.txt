@@ -1,0 +1,15 @@
+<?php
+
+namespace webApp\Model&&;
+
+use ProviderMain\Database\Module\ConfigModule;
+use ProviderMain\Database\Module\Module;
+
+class ?? extends Module
+{
+    use ConfigModule;
+
+   
+
+
+}

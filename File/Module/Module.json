@@ -1,0 +1,26 @@
+[
+    {
+        "User": {
+            "table": "user",
+            "authenticate": true
+        }
+    },
+    {
+        "Produit": {
+            "table": "produit",
+            "authenticate": true
+        }
+    },
+    {
+        "Devspark": {
+            "table": "devsparks",
+            "authenticate": true
+        }
+    },
+    {
+        "Guest": {
+            "table": "guests",
+            "authenticate": true
+        }
+    }
+]
