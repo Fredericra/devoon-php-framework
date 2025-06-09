@@ -29,12 +29,15 @@ trait ConfigDb
     public static function Connecting()
     {
         self::Accessing();
-     
         $serveur = trim($_ENV['DB_SERVEUR']);
         $host = trim($_ENV['DB_HOST']);
         $port = trim($_ENV['DB_PORT']);
         $user = trim($_ENV['DB_USER']);
-        $pdo = new PDO("mysql:host=$host;port=$port",$user,"");
+        $password = trim($_ENV['DB_PASSWORD']);
+        $pdo = new PDO("mysql:host=$host;port=$port",$user,$password, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
         $db = $_ENV['DB_NAME'];
         $pdo->query("CREATE DATABASE IF NOT EXISTS $db");
         self::$PDO = $pdo;
